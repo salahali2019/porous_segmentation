@@ -98,7 +98,7 @@ def train(model,train_dataloader,valid_dataloader,epochs):
     history = model.fit_generator(
     train_dataloader, 
     steps_per_epoch=len(train_dataloader), 
-    #epochs=1000, 
+    epochs=epochs, 
     callbacks=callbacks, 
     validation_data=valid_dataloader, 
     validation_steps=len(valid_dataloader),)
