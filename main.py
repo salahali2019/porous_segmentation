@@ -351,8 +351,8 @@ model.compile(
     metrics=metrics,
 )
 if args.command == "train":
-    train(model,train_dataloader,valid_dataloader)
+    train(model,train_dataloader,valid_dataloader,args.epoch)
 elif args.command == "predict":
-    detect(model,test_dataset,y_test_dir,args.epoch)
+    detect(model,test_dataset,y_test_dir)
 
 
