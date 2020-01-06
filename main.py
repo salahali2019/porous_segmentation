@@ -94,11 +94,11 @@ def merge_image_mask_ground_truth(image,predicted,ground_truth):
     return np.array(alphaBlended1)
 
     # train model
-def train(model,train_dataloader,valid_dataloader):
+def train(model,train_dataloader,valid_dataloader,epochs):
     history = model.fit_generator(
     train_dataloader, 
     steps_per_epoch=len(train_dataloader), 
-    epochs=1000, 
+    #epochs=1000, 
     callbacks=callbacks, 
     validation_data=valid_dataloader, 
     validation_steps=len(valid_dataloader),)
@@ -248,6 +248,9 @@ if __name__ == "__main__":
     parser.add_argument('--train_dir', required=False,
                         metavar="/path/to/dataset/",
                         help='Root directory of the dataset')
+     parser.add_argument('--epoch', required=False,
+                        metavar="/path/to/dataset/",
+                        help='Root directory of the dataset')
 
     parser.add_argument('--valid_dir', required=False,
                         metavar="/path/to/dataset/",
@@ -350,6 +353,6 @@ model.compile(
 if args.command == "train":
     train(model,train_dataloader,valid_dataloader)
 elif args.command == "predict":
-    detect(model,test_dataset,y_test_dir)
+    detect(model,test_dataset,y_test_dir,args.epoch)
 
 
