@@ -248,9 +248,7 @@ if __name__ == "__main__":
     parser.add_argument('--train_dir', required=False,
                         metavar="/path/to/dataset/",
                         help='Root directory of the dataset')
-  """  parser.add_argument('--epoch', required=False,
-                        metavar="/path/to/dataset/",
-                        help='Root directory of the dataset')"""
+
 
     parser.add_argument('--valid_dir', required=False,
                         metavar="/path/to/dataset/",
