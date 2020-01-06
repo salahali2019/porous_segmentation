@@ -173,7 +173,7 @@ class Dataset:
         return len(self.ids)
 
         # train model
-    def train(model):
+    def train(model,train_dataloader,valid_dataloader):
         history = model.fit_generator(
         train_dataloader, 
         steps_per_epoch=len(train_dataloader), 
@@ -184,7 +184,7 @@ class Dataset:
         model.save_weights('model_weight.h5')
       
       
-    def predict(model,y_test_dir):
+    def predict(model,test_dataset,y_test_dir):
         model.load_weights('model_weight.h5')
 
         for i in range(20):
