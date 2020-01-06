@@ -261,96 +261,92 @@ if __name__ == "__main__":
     
 
 
-    args = parser.parse_args()
-        
-                
-            
+    args = parser.parse_args()      
+  
+    x_train_dir = os.path.join(args.train_dir,'input')
+    y_train_dir = os.path.join(args.train_dir,'output')
 
-x_train_dir = os.path.join(args.train_dir,'input')
-y_train_dir = os.path.join(args.train_dir,'output')
+    x_valid_dir = os.path.join(args.valid_dir,'input')
+    y_valid_dir = os.path.join(args.valid_dir,'output')
 
-x_valid_dir = os.path.join(args.valid_dir,'input')
-y_valid_dir = os.path.join(args.valid_dir,'output')
-
-x_test_dir = os.path.join(args.test_dir,'input')
-y_test_dir = os.path.join(args.test_dir,'output')
+    x_test_dir = os.path.join(args.test_dir,'input')
+    y_test_dir = os.path.join(args.test_dir,'output')
 
 
-BACKBONE = 'resnet34'
-preprocess_input = sm.get_preprocessing(BACKBONE)
+    BACKBONE = 'resnet34'
+    preprocess_input = sm.get_preprocessing(BACKBONE)
 
-LR = 0.07
-optim = keras.optimizers.SGD(LR)
-metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5)]
-
-
-CLASSES=['pore']
-
-BATCH_SIZE = 8
-EPOCHS = 10
+    LR = 0.07
+    optim = keras.optimizers.SGD(LR)
+    metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5)]
 
 
-# Dataset for train images
-train_dataset = Dataset(
-    x_train_dir, 
-    y_train_dir, 
-    classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
-)
+    CLASSES=['pore']
 
-# Dataset for validation images
-valid_dataset = Dataset(
-    x_valid_dir, 
-    y_valid_dir, 
-    classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
-)
-
-test_dataset = Dataset(
-    x_test_dir, 
-    y_test_dir, 
-    classes=CLASSES,  class_values=[0],  row=192,column=192,ini_val=0
-)
+    BATCH_SIZE = 8
+    EPOCHS = 10
 
 
-train_dataloader = Dataloder(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-valid_dataloader = Dataloder(valid_dataset, batch_size=BATCH_SIZE, shuffle=True)
-test_dataloader = Dataloder(test_dataset, batch_size=1, shuffle=False)
+    # Dataset for train images
+    train_dataset = Dataset(
+        x_train_dir, 
+        y_train_dir, 
+        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
+    )
+
+    # Dataset for validation images
+    valid_dataset = Dataset(
+        x_valid_dir, 
+        y_valid_dir, 
+        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
+    )
+
+    test_dataset = Dataset(
+        x_test_dir, 
+        y_test_dir, 
+        classes=CLASSES,  class_values=[0],  row=192,column=192,ini_val=0
+    )
+
+
+    train_dataloader = Dataloder(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    valid_dataloader = Dataloder(valid_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    test_dataloader = Dataloder(test_dataset, batch_size=1, shuffle=False)
 
 
 
 
-#keras.backend.set_image_data_format('channels_last')
-keras.backend.set_image_data_format('channels_last')
+    #keras.backend.set_image_data_format('channels_last')
+    keras.backend.set_image_data_format('channels_last')
 
-model = sm.Unet(BACKBONE, encoder_weights='imagenet',classes=1,input_shape=(192, 192, 3),activation='sigmoid')
+    model = sm.Unet(BACKBONE, encoder_weights='imagenet',classes=1,input_shape=(192, 192, 3),activation='sigmoid')
 
-callbacks = [
-    keras.callbacks.ModelCheckpoint('./best_model_1.h5', save_weights_only=True, save_best_only=True, mode='min'),
-    keras.callbacks.ReduceLROnPlateau(),
-]
+    callbacks = [
+        keras.callbacks.ModelCheckpoint('./best_model_1.h5', save_weights_only=True, save_best_only=True, mode='min'),
+        keras.callbacks.ReduceLROnPlateau(),
+    ]
 
 
-# define optomizer
-optim = keras.optimizers.Adam(LR)
+    # define optomizer
+    optim = keras.optimizers.Adam(LR)
 
-# Segmentation models losses can be combined together by '+' and scaled by integer or float factor
-dice_loss = sm.losses.DiceLoss()
-focal_loss = sm.losses.BinaryFocalLoss() 
-total_loss = dice_loss + (1 * focal_loss)
+    # Segmentation models losses can be combined together by '+' and scaled by integer or float factor
+    dice_loss = sm.losses.DiceLoss()
+    focal_loss = sm.losses.BinaryFocalLoss() 
+    total_loss = dice_loss + (1 * focal_loss)
 
-# actulally total_loss can be imported directly from library, above example just show you how to manipulate with losses
-total_loss = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
+    # actulally total_loss can be imported directly from library, above example just show you how to manipulate with losses
+    total_loss = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
 
-#optim = keras.optimizers.Adam(LR)
-metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5),'accuracy']
+    #optim = keras.optimizers.Adam(LR)
+    metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5),'accuracy']
 
-model.compile(
-    optim,
-    loss=keras.losses.binary_crossentropy,
-    metrics=metrics,
-)
-if args.command == "train":
-    train(model,train_dataloader,valid_dataloader,EPOCHS)
-elif args.command == "predict":
-    predict(model,test_dataset,y_test_dir)
-
+    model.compile(
+        optim,
+        loss=keras.losses.binary_crossentropy,
+        metrics=metrics,
+    )
+    if args.command == "train":
+        train(model,train_dataloader,valid_dataloader,EPOCHS)
+    elif args.command == "predict":
+        predict(model,test_dataset,y_test_dir)
 
