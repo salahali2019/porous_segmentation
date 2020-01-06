@@ -93,6 +93,26 @@ def merge_image_mask_ground_truth(image,predicted,ground_truth):
     alphaBlended1 = Image.blend(image_pil_RGBA, mask_pil_RGBA, alpha=.15)
     return np.array(alphaBlended1)
 
+    # train model
+def train(model,train_dataloader,valid_dataloader):
+    history = model.fit_generator(
+    train_dataloader, 
+    steps_per_epoch=len(train_dataloader), 
+    epochs=1000, 
+    callbacks=callbacks, 
+    validation_data=valid_dataloader, 
+    validation_steps=len(valid_dataloader),)
+    model.save_weights('model_weight.h5')
+    
+    
+def predict(model,test_dataset,y_test_dir):
+    model.load_weights('model_weight.h5')
+
+    for i in range(20):
+        image, gt_mask =test_dataset[i]
+        image = np.expand_dims(image, axis=0)
+        pr_mask = model.predict(image).squeeze()
+        io.imsave(os.path.join(y_test_dir,str(i)),pr_mask)
 
 # classes for data loading and preprocessing
 class Dataset:
@@ -172,27 +192,7 @@ class Dataset:
     def __len__(self):
         return len(self.ids)
 
-        # train model
-    def train(model,train_dataloader,valid_dataloader):
-        history = model.fit_generator(
-        train_dataloader, 
-        steps_per_epoch=len(train_dataloader), 
-        epochs=1000, 
-        callbacks=callbacks, 
-        validation_data=valid_dataloader, 
-        validation_steps=len(valid_dataloader),)
-        model.save_weights('model_weight.h5')
-      
-      
-    def predict(model,test_dataset,y_test_dir):
-        model.load_weights('model_weight.h5')
-
-        for i in range(20):
-            image, gt_mask =test_dataset[i]
-            image = np.expand_dims(image, axis=0)
-            pr_mask = model.predict(image).squeeze()
-            io.imsave(os.path.join(y_test_dir,str(i)),pr_mask)
-
+   
 
       
 class Dataloder(keras.utils.Sequence):
