@@ -351,6 +351,6 @@ model.compile(
 if args.command == "train":
     train(model,train_dataloader,valid_dataloader,EPOCHS)
 elif args.command == "predict":
-    detect(model,test_dataset,y_test_dir)
+    predict(model,test_dataset,y_test_dir)
 
 
