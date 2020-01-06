@@ -68,10 +68,10 @@ if __name__ == "__main__":
     
   #  if not os.path.exists(args.3D_dir):
    #     os.makedirs(args.3D_dir)
-    f not os.path.exists(args.grayscale_image_dir):
-        os.makedirs(args.grayscale_image_dir)
-    if not os.path.exists(args.GT_image_dir):
-        os.makedirs(args.GT_image_dir)
+  #  f not os.path.exists(args.grayscale_image_dir):
+   #     os.makedirs(args.grayscale_image_dir)
+    #if not os.path.exists(args.GT_image_dir):
+     #   os.makedirs(args.GT_image_dir)
   
     
     
