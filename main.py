@@ -289,7 +289,7 @@ metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5)]
 CLASSES=['pore']
 
 BATCH_SIZE = 8
-EPOCHS = 200
+EPOCHS = 10
 
 
 # Dataset for train images
@@ -351,7 +351,7 @@ model.compile(
     metrics=metrics,
 )
 if args.command == "train":
-    train(model,train_dataloader,valid_dataloader,args.epoch)
+    train(model,train_dataloader,valid_dataloader,EPOCHS)
 elif args.command == "predict":
     detect(model,test_dataset,y_test_dir)
 
