@@ -19,4 +19,4 @@ pytest-cov
 pytest-pep8 
 jupyter 
 pyevtk
-
+opencv-python
