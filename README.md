@@ -5,14 +5,14 @@ This is an implementation of paper titled "Automatic Segmentation for Synchrotro
 ## Getting Started
 
 ## Install
-
+```
 $ git clone https://github.com/salahali2019/porous_segmentation.git
 $ cd porous_segmentation
 $ pip install -r requirements.txt
 $ pip install --upgrade tensorflow
 $ pip install opencv-python
 $ pip install keras
-
+```
 
 ## Training on Your Own Dataset
 
