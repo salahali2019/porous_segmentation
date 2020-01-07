@@ -248,6 +248,7 @@ if __name__ == "__main__":
     parser.add_argument("command",
                         metavar="<command>",
                         help="'train' or 'predict'")
+    parser.add_argument('--epoch', type=int,required=False,)
 
     parser.add_argument('--train_dir', required=False,
                         metavar="/path/to/dataset/",
@@ -350,7 +351,7 @@ if __name__ == "__main__":
         metrics=metrics,
     )
     if args.command == "train":
-        train(model,train_dataloader,valid_dataloader,EPOCHS)
+        train(model,train_dataloader,valid_dataloader,args.epoch)
     elif args.command == "predict":
         predict(model,x_test_dir,y_test_dir)
 
