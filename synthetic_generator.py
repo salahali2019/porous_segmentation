@@ -50,7 +50,7 @@ if __name__ == "__main__":
     parser.add_argument("command",
                         metavar="<command>",
                         help="'blob' or 'overlapping_spheres'")
-    parser.add_argument('--3D_dir', required=False,
+    parser.add_argument('--three_3D_dir', required=False,
                         metavar="/path/to/dataset/",
                         help='Root directory of the 3D dataset')
 
@@ -64,16 +64,19 @@ if __name__ == "__main__":
     
    
     args = parser.parse_args()
+    
+ 
+    if not os.path.exists(args.grayscale_image_dir):
+            os.makedirs(args.grayscale_image_dir)
+    if not os.path.exists(args.GT_image_dir):
+            os.makedirs(args.GT_image_dir)
+    if not os.path.exists(args.three_3D_dir):
+            os.makedirs(args.three_3D_dir)
 
-    
-  #  if not os.path.exists(args.3D_dir):
-   #     os.makedirs(args.3D_dir)
-  #  f not os.path.exists(args.grayscale_image_dir):
-   #     os.makedirs(args.grayscale_image_dir)
-    #if not os.path.exists(args.GT_image_dir):
-     #   os.makedirs(args.GT_image_dir)
-  
-    
+
+
+
+        
     
 
 
