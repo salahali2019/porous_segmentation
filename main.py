@@ -12,7 +12,6 @@ import cv2
 import keras
 import numpy as np
 import matplotlib.pyplot as plt
-import albumentations as A
 from skimage import io, img_as_int, img_as_ubyte
 from skimage.filters import threshold_otsu
 from keras import backend as K
