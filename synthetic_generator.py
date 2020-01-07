@@ -50,6 +50,12 @@ if __name__ == "__main__":
     parser.add_argument("command",
                         metavar="<command>",
                         help="'blob' or 'overlapping_spheres'")
+
+    parser.add_argument('--porosity', type=float,required=False,)
+
+    parser.add_argument('--size', type=float,required=False,)
+
+
     parser.add_argument('--three_3D_dir', required=False,
                         metavar="/path/to/dataset/",
                         help='Root directory of the 3D dataset')
@@ -74,6 +80,9 @@ if __name__ == "__main__":
             os.makedirs(args.three_3D_dir)
 
 
+    p=args.porosity
+    blob=args.size
+    r=args.size
 
 
         
@@ -81,8 +90,8 @@ if __name__ == "__main__":
 
 
     if args.command == "blob":
-        blob=2
-        p=0.6
+       # blob=2
+      #  p=0.6
         im1 = np.invert(ps.generators.blobs(shape=[20,256,256], porosity=p, blobiness=blob))
         noise=sythetic_gaussian_image(im1)
         for i in range(20):
@@ -91,8 +100,8 @@ if __name__ == "__main__":
             plt.imsave(os.path.join(args.GT_image_dir,name1),im1[i])
 
     if args.command == "overlapping_spheres":
-        p=0.6
-        r=30
+    #  p=0.6
+     #   r=30
         im1 = np.invert(ps.generators.overlapping_spheres(shape=[100,256,256], porosity=p, radius=r))
         noise=sythetic_gaussian_image(im1)
 
