@@ -94,18 +94,18 @@ def merge_image_mask_ground_truth(image,predicted,ground_truth):
     return np.array(alphaBlended1)
 
     # train model
-def train(model,train_dataloader,valid_dataloader,E):
+def train(model,train_dataloader,valid_dataloader,epoch,model_dir):
     history = model.fit_generator(
     train_dataloader, 
     steps_per_epoch=len(train_dataloader), 
-    epochs=E, 
+    epochs=epoch, 
     callbacks=callbacks, 
     validation_data=valid_dataloader, 
     validation_steps=len(valid_dataloader),)
-    model.save_weights('model_weight.h5')
+    model.save_weights(model_dir)
     
-def predict(model,x_test_dir,y_test_dir):
-    model.load_weights('model_weight.h5')
+def predict(model,x_test_dir,y_test_dir,model_dir):
+    model.load_weights(model_dir)
     names=os.listdir(x_test_dir)
   
     for i in range(len(names)):
@@ -268,6 +268,9 @@ if __name__ == "__main__":
                         help='Root directory of the test dataset')
     
 
+    parser.add_argument('--model_dir', required=False,
+                        metavar="/path/to/dataset/",
+                        help='Root directory of the training weight')
 
     args = parser.parse_args()      
   
@@ -357,9 +360,9 @@ if __name__ == "__main__":
         metrics=metrics,
     )
     if args.command == "train":
-        train(model,train_dataloader,valid_dataloader,args.epoch)
+        train(model,train_dataloader,valid_dataloader,args.epoch,args.model_dir)
     elif args.command == "predict":
-        predict(model,x_test_dir,y_test_dir)
+        predict(model,x_test_dir,y_test_dir,args.model_dir)
 
 
 
