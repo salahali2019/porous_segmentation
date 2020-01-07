@@ -249,20 +249,23 @@ if __name__ == "__main__":
                         metavar="<command>",
                         help="'train' or 'predict'")
     parser.add_argument('--epoch', type=int,required=False,)
+    parser.add_argument('--BATCH_SIZE', type=int,required=False,)
+    parser.add_argument('--LR', type=float,required=False,)
+
 
     parser.add_argument('--train_dir', required=False,
                         metavar="/path/to/dataset/",
-                        help='Root directory of the dataset')
+                        help='Root directory of the training dataset')
 
 
     parser.add_argument('--valid_dir', required=False,
                         metavar="/path/to/dataset/",
-                        help='Root directory of the dataset')
+                        help='Root directory of the validation dataset')
 
 
     parser.add_argument('--test_dir', required=False,
                         metavar="/path/to/dataset/",
-                        help='Root directory of the dataset')
+                        help='Root directory of the test dataset')
     
 
 
@@ -282,6 +285,7 @@ if __name__ == "__main__":
     preprocess_input = sm.get_preprocessing(BACKBONE)
 
     LR = 0.07
+    LR=args.LR
     optim = keras.optimizers.SGD(LR)
     metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5)]
 
@@ -289,6 +293,8 @@ if __name__ == "__main__":
     CLASSES=['pore']
 
     BATCH_SIZE = 8
+    BATCH_SIZE = args.BATCH_SIZE
+
     EPOCHS = 10
 
 
