@@ -114,7 +114,9 @@ def predict(model,x_test_dir,y_test_dir,model_dir):
         image = np.expand_dims(image, axis=0)
         pr_mask = model.predict(image).squeeze()
         pr_mask=img_as_ubyte(pr_mask)
-        #pr_mask=img_as_ubyte(pr_mask<0.5)
+        pr_mask=img_as_ubyte(pr_mask<50)
+
+        #pr_mask=img_as_ubyte(pr_mask)
 
 
         io.imsave(os.path.join(y_test_dir,names[i]),pr_mask)
