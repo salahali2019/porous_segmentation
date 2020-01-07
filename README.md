@@ -15,8 +15,8 @@ $ pip install keras
 ```
 
 ## Training on Your Own Dataset
-
-!python3 synthetic_generator.py overlapping_spheres --porosity=0.6  --size=23 --fileName='first' --three_3D_dir='synthetic/three_3D_dir' --grayscale_image_dir="synthetic/input" --GT_image_dir="synthetic/output"
-!python3 main.py train  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='validation' --test_dir='test'
-
+```
+$ python3 synthetic_generator.py overlapping_spheres --porosity=0.6  --size=23 --fileName='first' --three_3D_dir='synthetic/three_3D_dir' --grayscale_image_dir="synthetic/input" --GT_image_dir="synthetic/output"
+$ python3 main.py train  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='validation' --test_dir='test'
+```
 ## Citation
