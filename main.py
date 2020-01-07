@@ -104,15 +104,19 @@ def train(model,train_dataloader,valid_dataloader,E):
     validation_steps=len(valid_dataloader),)
     model.save_weights('model_weight.h5')
     
-    
-def predict(model,test_dataset,y_test_dir):
+def predict(model,x_test_dir,y_test_dir):
     model.load_weights('model_weight.h5')
+    names=os.listdir(x_test_dir)
+  
+    for i in range(len(names)):
+        image=cv2.imread(os.path.join(x_test_dir,names[i]))[:192,:192]
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    for i in range(20):
-        image, gt_mask =test_dataset[i]
         image = np.expand_dims(image, axis=0)
         pr_mask = model.predict(image).squeeze()
-        io.imsave(os.path.join(y_test_dir,str(i)),pr_mask)
+        pr_mask=img_as_ubyte(pr_mask>50)
+
+        io.imsave(os.path.join(y_test_dir,names[i]),pr_mask)
 
 # classes for data loading and preprocessing
 class Dataset:
@@ -350,3 +354,6 @@ if __name__ == "__main__":
     elif args.command == "predict":
         predict(model,test_dataset,y_test_dir)
 
+
+
+# %%
