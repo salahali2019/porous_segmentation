@@ -352,7 +352,7 @@ if __name__ == "__main__":
     if args.command == "train":
         train(model,train_dataloader,valid_dataloader,EPOCHS)
     elif args.command == "predict":
-        predict(model,test_dataset,y_test_dir)
+        predict(model,x_test_dir,y_test_dir)
 
 
 
