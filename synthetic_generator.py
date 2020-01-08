@@ -125,7 +125,8 @@ if __name__ == "__main__":
 
         a=np.invert(ps.generators.overlapping_spheres([256,256],radius=5, porosity=0.7))
         b=np.invert(ps.generators.blobs([256,256],blobiness=0.5, porosity=0.8))
-        im1=np.logical_or(a,b)*255
+        im1=np.logical_or(a,b)
+        im1=img_as_ubyte(im1)
 
         noise=sythetic_gaussian_image(im1)
 
