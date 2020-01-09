@@ -277,14 +277,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()      
   
-    x_train_dir = os.path.join(args.train_dir,'input')
-    y_train_dir = os.path.join(args.train_dir,'output')
+   
 
-    x_valid_dir = os.path.join(args.valid_dir,'input')
-    y_valid_dir = os.path.join(args.valid_dir,'output')
-
-    x_test_dir = os.path.join(args.test_dir,'input')
-    y_test_dir = os.path.join(args.test_dir,'output')
 
 
     BACKBONE = 'resnet34'
@@ -304,30 +298,9 @@ if __name__ == "__main__":
     EPOCHS = 10
 
 
-    # Dataset for train images
-    train_dataset = Dataset(
-        x_train_dir, 
-        y_train_dir, 
-        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
-    )
-
-    # Dataset for validation images
-    valid_dataset = Dataset(
-        x_valid_dir, 
-        y_valid_dir, 
-        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0
-    )
-
-    test_dataset = Dataset(
-        x_test_dir, 
-        y_test_dir, 
-        classes=CLASSES,  class_values=[0],  row=192,column=192,ini_val=0
-    )
 
 
-    train_dataloader = Dataloder(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-    valid_dataloader = Dataloder(valid_dataset, batch_size=BATCH_SIZE, shuffle=True)
-    test_dataloader = Dataloder(test_dataset, batch_size=1, shuffle=False)
+ 
 
 
 
@@ -363,8 +336,38 @@ if __name__ == "__main__":
         metrics=metrics,
     )
     if args.command == "train":
+        x_train_dir = os.path.join(args.train_dir,'input')
+        y_train_dir = os.path.join(args.train_dir,'output')
+
+        x_valid_dir = os.path.join(args.valid_dir,'input')
+        y_valid_dir = os.path.join(args.valid_dir,'output')
+
+    # Dataset for train images
+        train_dataset = Dataset(x_train_dir, 
+        y_train_dir, 
+        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0)
+
+    # Dataset for validation images
+        valid_dataset = Dataset(x_valid_dir,y_valid_dir, 
+        classes=CLASSES, class_values=[0], row=192,column=192,ini_val=0)
+        train_dataloader = Dataloder(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+        valid_dataloader = Dataloder(valid_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    
+        
+        
         train(model,train_dataloader,valid_dataloader,args.epoch,args.model_dir)
     elif args.command == "predict":
+        x_test_dir = os.path.join(args.test_dir,'input')
+        y_test_dir = os.path.join(args.test_dir,'output')
+        test_dataset = Dataset(
+        x_test_dir, 
+        y_test_dir, 
+        classes=CLASSES,  class_values=[0],  row=192,column=192,ini_val=0
+    )
+
+        test_dataloader = Dataloder(test_dataset, batch_size=1, shuffle=False)
+
+
         predict(model,x_test_dir,y_test_dir,args.model_dir)
 
 
