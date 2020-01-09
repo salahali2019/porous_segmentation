@@ -17,12 +17,11 @@ $ pip install keras
 ## Training on Your Own Dataset
 
 
-<<<<<<< HEAD
+<<<<<<< 
 ![alternativetext](gui.png)
 
 =======
-![(\\rmit.internal\USRHome\sh5\s3629495\Configuration\Desktop\gui.png)
->>>>>>> b6c3d9cc5def052b68cb815b7450657cc148bb78
+
 ```
 $ python3 synthetic_generator.py overlapping_spheres --porosity=0.6  --size=23 --fileName='first' --three_3D_dir='synthetic/three_3D_dir' --grayscale_image_dir="synthetic/input" --GT_image_dir="synthetic/output"
 $ python3 main.py train  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='validation' --test_dir='test --model_dir='model_weight.h5'
