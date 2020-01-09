@@ -24,8 +24,8 @@ $ pip install keras
 
 ```
 $ python3 synthetic_generator.py overlapping_spheres --porosity=0.6  --size=23 --fileName='first' --three_3D_dir='synthetic/three_3D_dir' --grayscale_image_dir="synthetic/input" --GT_image_dir="synthetic/output"
-$ python3 main.py train  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='validation' --test_dir='test --model_dir='model_weight.h5'
-$ python3 main.py predict  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='real' --test_dir='test',--model_dir='model_weight.h5'
+$ python3 main.py train  --epoch=11 --BATCH_SIZE=8 --LR=0.08 --train_dir='synthetic' --valid_dir='validation' --model_dir='model_weight.h5'
+$ python3 main.py predict  --epoch=11 --BATCH_SIZE=8 --LR=0.08  --test_dir='test',--model_dir='model_weight.h5'
 
 ```
 ## Citation
