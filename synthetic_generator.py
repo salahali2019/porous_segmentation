@@ -98,7 +98,7 @@ if __name__ == "__main__":
       #  p=0.6
         p=args.porosity
         blob=args.blob_size
-        im1 = np.invert(ps.generators.blobs(shape=[100,256,256], porosity=p, blobiness=blob))
+        im1 = ps.generators.blobs(shape=[100,256,256], porosity=p, blobiness=blob)
         noise=sythetic_gaussian_image(im1)
         for i in range(100):
             name1=fileN+'_'+'blob'+str(blob)+'_'+'p'+str(p)+str(i)+'.png'     
@@ -110,7 +110,7 @@ if __name__ == "__main__":
      #   r=30
         p=args.porosity
         r=args.radius_size
-        im1 = np.invert(ps.generators.overlapping_spheres(shape=[100,256,256], porosity=p, radius=r))
+        im1 = ps.generators.overlapping_spheres(shape=[100,256,256], porosity=p, radius=r)
         noise=sythetic_gaussian_image(im1)
 
         for i in range(100):
@@ -123,8 +123,8 @@ if __name__ == "__main__":
         r=args.radius_size
         blob=args.blob_size
 
-        a=np.invert(ps.generators.overlapping_spheres([100,256,256],radius=5, porosity=0.7))
-        b=np.invert(ps.generators.blobs([100,256,256],blobiness=0.5, porosity=0.8))
+        a=ps.generators.overlapping_spheres([100,256,256],radius=5, porosity=0.7)
+        b=ps.generators.blobs([100,256,256],blobiness=0.5, porosity=0.8)
         im1=np.logical_or(a,b)
 
         noise=sythetic_gaussian_image(im1)
