@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 from skimage.util import img_as_ubyte
 from PIL import Image
 from scipy.ndimage.morphology import binary_fill_holes
+from scipy.ndimage import gaussian_filter
 
 
 # helper function for data visualization
@@ -173,6 +174,8 @@ class Dataset:
         # read data
         image = cv2.imread(self.images_fps[i])
         image =image[self.ini_val:self.row+self.ini_val,self.ini_val:self.column+self.ini_val] 
+        image=gaussian_filter((image), sigma=3)
+
 
        # image=image[580:-579,580:-579,:]
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
