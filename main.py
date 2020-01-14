@@ -114,7 +114,7 @@ def predict(model,x_test_dir,y_test_dir,model_dir):
         image = np.expand_dims(image, axis=0)
         pr_mask = model.predict(image).squeeze()
         pr_mask=img_as_ubyte(pr_mask)
-        pr_mask=img_as_ubyte(pr_mask<50)
+        #pr_mask=img_as_ubyte(pr_mask<50)
 
         #pr_mask=img_as_ubyte(pr_mask)
 
@@ -330,10 +330,16 @@ if __name__ == "__main__":
     #optim = keras.optimizers.Adam(LR)
     metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5),'accuracy']
 
+    # model.compile(
+    #     optim,
+    #     loss=keras.losses.binary_crossentropy,
+    #     metrics=metrics,
+    # )
+
     model.compile(
-        optim,
-        loss=keras.losses.binary_crossentropy,
-        metrics=metrics,
+    optim,
+    loss=total_loss,
+    metrics=metrics,
     )
     if args.command == "train":
         x_train_dir = os.path.join(args.train_dir,'input')
