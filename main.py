@@ -336,7 +336,7 @@ if __name__ == "__main__":
         total_loss = dice_loss + (1 * focal_loss)
 
     # actulally total_loss can be imported directly from library, above example just show you how to manipulate with losses
-         LOSS = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
+        LOSS = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
 
         
     # model.compile(
