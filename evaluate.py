@@ -18,6 +18,8 @@ if __name__ == "__main__":
     parser.add_argument('--image_pr_dir', required=False,
                         metavar="/path/to/dataset/",
                         help='Root directory of the gt dataset')
+    parser.add_argument('--T', type=int,required=False,)
+                        
     args = parser.parse_args()      
 
 ## accuracy for bread 
@@ -34,7 +36,7 @@ if __name__ == "__main__":
 
         gt_image = io.imread(os.path.join(args.image_gt_dir,image_names[i]))
         pr_mask = io.imread(os.path.join(args.image_pr_dir,image_names[i]))
-        pr_mask=(pr_mask<50)*255
+        pr_mask=(pr_mask<args.T)*255
     
         predic_acc_0=np.logical_and(pr_mask==0,gt_image==0).sum()/(gt_image==0).sum()
         predic_acc_255=np.logical_and(pr_mask==255,gt_image==255).sum()/(gt_image==255).sum()
