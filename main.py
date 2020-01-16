@@ -257,7 +257,7 @@ if __name__ == "__main__":
     parser.add_argument('--epoch', type=int,required=False,)
     parser.add_argument('--BATCH_SIZE', type=int,required=False,)
     parser.add_argument('--LR', type=float,required=False,)
-    parser.add_argument('--loss', metavar="loss",,required=False,)
+    parser.add_argument('--loss', metavar="loss",required=False,)
 
 
 
