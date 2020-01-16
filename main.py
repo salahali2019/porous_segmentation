@@ -257,6 +257,8 @@ if __name__ == "__main__":
     parser.add_argument('--epoch', type=int,required=False,)
     parser.add_argument('--BATCH_SIZE', type=int,required=False,)
     parser.add_argument('--LR', type=float,required=False,)
+    parser.add_argument('--loss', type=float,required=False,)
+
 
 
     parser.add_argument('--train_dir', required=False,
@@ -323,16 +325,20 @@ if __name__ == "__main__":
     optim = keras.optimizers.Adam(LR)
 
     # Segmentation models losses can be combined together by '+' and scaled by integer or float factor
-    dice_loss = sm.losses.DiceLoss()
-    focal_loss = sm.losses.BinaryFocalLoss() 
-    total_loss = dice_loss + (1 * focal_loss)
-
-    # actulally total_loss can be imported directly from library, above example just show you how to manipulate with losses
-    total_loss = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
-
+ 
     #optim = keras.optimizers.Adam(LR)
     metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5),'accuracy']
+    if(args.loss='binary_crossentropy'):
+        LOSS=keras.losses.binary_crossentropy
+    else if(args.loss='binary_focal_dice_loss'):
+        dice_loss = sm.losses.DiceLoss()
+        focal_loss = sm.losses.BinaryFocalLoss() 
+        total_loss = dice_loss + (1 * focal_loss)
 
+    # actulally total_loss can be imported directly from library, above example just show you how to manipulate with losses
+         LOSS = sm.losses.binary_focal_dice_loss # or sm.losses.categorical_focal_dice_loss 
+
+        
     # model.compile(
     #     optim,
     #     loss=keras.losses.binary_crossentropy,
@@ -341,7 +347,7 @@ if __name__ == "__main__":
 
     model.compile(
     optim,
-    loss=total_loss,
+    loss=LOSS,
     metrics=metrics,
     )
     if args.command == "train":
