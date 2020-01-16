@@ -330,7 +330,7 @@ if __name__ == "__main__":
     metrics = [sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5),'accuracy']
     if(args.loss=='binary_crossentropy'):
         LOSS=keras.losses.binary_crossentropy
-    else if(args.loss=='binary_focal_dice_loss'):
+    if(args.loss=='binary_focal_dice_loss'):
         dice_loss = sm.losses.DiceLoss()
         focal_loss = sm.losses.BinaryFocalLoss() 
         total_loss = dice_loss + (1 * focal_loss)
