@@ -286,7 +286,7 @@ if __name__ == "__main__":
 
 
 
-    BACKBONE = 'resnet34'
+    BACKBONE = 'vgg16'
     preprocess_input = sm.get_preprocessing(BACKBONE)
 
     LR = 0.07
