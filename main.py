@@ -181,7 +181,7 @@ class Dataset:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         mask = cv2.imread(self.masks_fps[i], 0)
         mask = mask[self.ini_val:self.row+self.ini_val,self.ini_val:self.column+self.ini_val] 
-        mask=img_as_ubyte(mask>50)
+        mask=img_as_ubyte(mask<50)
         
         # extract certain classes from mask (e.g. cars)
         masks = [(mask == v) for v in self.class_values]
