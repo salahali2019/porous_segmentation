@@ -259,6 +259,12 @@ if __name__ == "__main__":
     parser.add_argument('--LR', type=float,required=False,)
     parser.add_argument('--loss', metavar="loss",required=False,)
 
+    parser.add_argument('--model', required=False,
+                        metavar="/path/to/dataset/",
+                        help='Root directory of the training dataset')
+    parser.add_argument('--optimiser', required=False,
+                        metavar="/path/to/dataset/",
+                        help='Root directory of the training dataset')
 
 
     parser.add_argument('--train_dir', required=False,
@@ -312,8 +318,10 @@ if __name__ == "__main__":
 
     #keras.backend.set_image_data_format('channels_last')
     keras.backend.set_image_data_format('channels_last')
-
-    model = sm.Unet(BACKBONE, encoder_weights='imagenet',classes=1,input_shape=(192, 192, 3),activation='sigmoid')
+    if(args.model=='unet'):
+          model = sm.Unet(BACKBONE, encoder_weights='imagenet',classes=1,input_shape=(192, 192, 3),activation='sigmoid')
+    if(args.model=='Linknet'):
+          model = sm.Linknet(BACKBONE, encoder_weights='imagenet',classes=1,input_shape=(192, 192, 3),activation='sigmoid')
 
     callbacks = [
         keras.callbacks.ModelCheckpoint('./best_model_1.h5', save_weights_only=True, save_best_only=True, mode='min'),
@@ -322,7 +330,14 @@ if __name__ == "__main__":
 
 
     # define optomizer
-    optim = keras.optimizers.Adam(LR)
+    if(args.optimiser=='Adam'):    
+        optim = keras.optimizers.Adam(LR)
+    if(args.optimiser=='Adagrad'): 
+       optim = keras.optimizers.Adagrad(LR)
+    if(args.optimiser=='SGD'):    
+       optim = keras.optimizers.SGD(LR)
+
+
 
     # Segmentation models losses can be combined together by '+' and scaled by integer or float factor
  
